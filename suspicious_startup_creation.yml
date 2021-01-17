@@ -10,9 +10,9 @@ logsource:
 detection:
     selection:
         Image:
-	  -'*\powershell.exe'
-	  -'*\wscript.exe'
-	  -'*\public\\*'
+	   -'*\powershell.exe'
+	   -'*\wscript.exe'
+	   -'*\public\\*'
         TargetFilename: '*\roaming\Microsoft\Windows\Start Menu\Programs\Startup\\*'
     condition: selection
 falsepositives:
