@@ -1,0 +1,19 @@
+title: Detection of Solarmarker File
+id: 297127da-0f2f-460f-8d91-e5ad3d7050cd
+status: experimental
+description: File created as part of Jupyter Malware infection
+references:
+    - https://security5magics.blogspot.com/2020/12/tracking-jupyter-malware.html
+author: Lucas Acha
+date: 2021/01/16
+modified: 2021/01/16
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:        
+        TargetFilename: '*\solarmarker.dat'
+    condition: selection
+falsepositives:
+    - Unknown
+level: high

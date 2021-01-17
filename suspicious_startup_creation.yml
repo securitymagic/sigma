@@ -1,0 +1,20 @@
+title: Suspicious Processes Writing to Startup
+id: 3173936f-ff45-429e-b5bb-a7ea18dcb455
+status: experimental
+description: Detects unusual processes writing to Startup
+date: 2021/01/16
+author: Lucas Acha
+logsource:
+    product: windows
+    category: file_event
+detection:
+    selection:
+        Image:
+			-'*\powershell.exe'
+			-'*\wscript.exe'
+			-'*\public\\*'
+        TargetFilename: '*\roaming\Microsoft\Windows\Start Menu\Programs\Startup\\*'
+    condition: selection
+falsepositives:
+    - unknown
+level: high
