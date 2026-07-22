@@ -1,0 +1,26 @@
+title: StoreSocks Campaign User Identifier on Command Line
+id: 1465901c-f64b-483b-a237-16db30385a10
+status: experimental
+description: Detects StoreSocks campaign identifiers passed to the native Go DLL Start
+  routine or test loaders.
+references:
+- https://blog.lukeacha.com/2026/05/fake-windirstat-lightshot-apps-deliver.html
+- https://blog.lukeacha.com/2026/07/microsoft-store-apps-go-backconnect.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.command-and-control
+- attack.t1071.001
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    CommandLine|contains:
+    - -user_id=microsoft_store_WinDirStat_Disk_Analysis_9MW9HR27K9B9
+    - -user_id=microsoftstore_lightshot_9NTC2KMZMGND
+    - -user_id=TECHNOLOGIESFORBUSINESSLL.ScreenRecorder_ha52ea8mnacsj
+  condition: selection
+falsepositives:
+- Unlikely
+level: high

@@ -1,0 +1,30 @@
+title: StoreSocks Proxyware Helper Infrastructure Connection
+id: 21236516-5c5c-48d3-bce7-89927aa67521
+status: experimental
+description: Detects network connections to helper infrastructure documented across
+  the StoreSocks campaign.
+references:
+- https://blog.lukeacha.com/2026/05/fake-windirstat-lightshot-apps-deliver.html
+- https://blog.lukeacha.com/2026/07/microsoft-store-apps-go-backconnect.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.command-and-control
+- attack.t1071.001
+- attack.t1090
+logsource:
+  category: network_connection
+  product: windows
+detection:
+  selection:
+    DestinationHostname|endswith:
+    - mylabubus.shop
+    - labubusmarket.com
+    - checkupdatesnow.xyz
+    - storetelemetryapi.xyz
+    - storetelemetryapiapps.xyz
+    - telemetrystoreapi1.xyz
+  condition: selection
+falsepositives:
+- Unlikely
+level: high
