@@ -1,0 +1,27 @@
+title: SMVEO Agent Certificate Material Creation
+id: c432fe58-192e-479e-b9fb-9de8f4795448
+status: experimental
+description: Detects creation of the client certificate, private key, and CA certificate
+  under the campaign-specific LOCALAPPDATA SMVEO directory.
+references:
+- https://blog.lukeacha.com/2026/06/purerat-variant-observed-in-ai-video.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.command-and-control
+- attack.t1573
+logsource:
+  category: file_event
+  product: windows
+detection:
+  selection_path:
+    TargetFilename|contains: \AppData\Local\SMVEO\
+  selection_file:
+    TargetFilename|endswith:
+    - \client.crt
+    - \client.key
+    - \ca.crt
+  condition: selection_path and selection_file
+falsepositives:
+- Unlikely
+level: high

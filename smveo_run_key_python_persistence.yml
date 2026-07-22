@@ -1,0 +1,27 @@
+title: SMVEO Drive Video Python Run Key Persistence
+id: 80bc6dc9-89c7-4917-b54a-cb9a8b599227
+status: experimental
+description: Detects Run-key persistence referencing drivevideo.pyc or python.pyc
+  as observed in the fake Drive Video PureRAT chain.
+references:
+- https://blog.lukeacha.com/2026/06/purerat-variant-observed-in-ai-video.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.persistence
+- attack.t1547.001
+logsource:
+  category: registry_set
+  product: windows
+detection:
+  selection_key:
+    TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\Run\
+  selection_value:
+    Details|contains:
+    - drivevideo.pyc
+    - python.pyc
+    - DriveVideoSetup-x64-0.1.0.exe
+  condition: selection_key and selection_value
+falsepositives:
+- Unlikely
+level: high
