@@ -1,0 +1,26 @@
+title: HydraSeven Lure Launches Edge WebView2 Runtime
+id: dca259c7-a699-4a4d-94fc-2cfe89821f9b
+status: experimental
+description: Detects HydraSeven lure filenames launching msedgewebview2.exe.
+references:
+- https://blog.lukeacha.com/2023/10/interesting-customloader-observed-in.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_parent:
+    ParentImage|endswith:
+    - \pdfconverters.exe
+    - \createmygif.exe
+    - \videodownload.exe
+    - \pdfunk.exe
+  selection_child:
+    Image|endswith: \msedgewebview2.exe
+  condition: selection_parent and selection_child
+falsepositives:
+- Unlikely
+level: medium

@@ -1,0 +1,23 @@
+title: HydraSeven PDFunk STP Update Execution
+id: 926878de-9812-4f16-9514-ca729d53f7f2
+status: experimental
+description: Detects the campaign-specific PDFunk.exe --stp command observed in the
+  HydraSeven loader chain.
+references:
+- https://blog.lukeacha.com/2023/10/interesting-customloader-observed-in.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith: \PDFunk.exe
+  selection_cli:
+    CommandLine|contains: --stp
+  condition: selection_image and selection_cli
+falsepositives:
+- Unlikely
+level: high
