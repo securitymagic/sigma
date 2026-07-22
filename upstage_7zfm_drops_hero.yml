@@ -1,0 +1,25 @@
+title: Trojanized 7-Zip File Manager Launches UpStage Components
+id: af2485d2-9fd8-4691-9e2f-c4c38ddc9021
+status: experimental
+description: Detects 7zfm.exe launching UpStage campaign components hero.exe or upHero.exe.
+references:
+- https://blog.lukeacha.com/2026/01/beware-of-fake-7zip-installer-upstage.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+- attack.t1204.002
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_parent:
+    ParentImage|endswith: \7zfm.exe
+  selection_child:
+    Image|endswith:
+    - \hero.exe
+    - \upHero.exe
+  condition: selection_parent and selection_child
+falsepositives:
+- Unlikely
+level: high

@@ -1,0 +1,24 @@
+title: UpStage Hero Payload Execution from SysWOW64
+id: 9660b1c6-76e0-4a2b-a0b6-bfc60a9da1e4
+status: experimental
+description: Detects execution of hero.exe or upHero.exe from the campaign-specific
+  C:\Windows\SysWOW64\hero directory.
+references:
+- https://blog.lukeacha.com/2026/01/beware-of-fake-7zip-installer-upstage.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+- attack.t1204.002
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+    - \SysWOW64\hero\hero.exe
+    - \SysWOW64\hero\upHero.exe
+  condition: selection
+falsepositives:
+- Unlikely
+level: high
