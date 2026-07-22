@@ -1,0 +1,29 @@
+title: YAPA Refresh Executable Scheduled Task
+id: ad8e8766-f7b8-4820-8f42-f8c1471d3081
+status: experimental
+description: Detects scheduled-task creation referencing updater binaries observed
+  in YAPA WiX packages.
+references:
+- https://blog.lukeacha.com/2026/04/yapa-now-using-wix-to-further-evade.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.persistence
+- attack.t1053.005
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith:
+    - \schtasks.exe
+    - \powershell.exe
+  selection_task:
+    CommandLine|contains:
+    - PDFRefresh.exe
+    - SnakeGameRefresh.exe
+    - datasync.exe
+  condition: selection_image and selection_task
+falsepositives:
+- Unlikely
+level: high
