@@ -1,0 +1,28 @@
+title: EvilAI Electron Application Launches Node.js
+id: 63745e86-6ca8-4cd6-80b6-dfe591fcd416
+status: experimental
+description: Detects known EvilAI lure executables launching node.exe, a useful host-side
+  pivot when the embedded Electron JavaScript is executed separately.
+references:
+- https://blog.lukeacha.com/2025/08/fake-manual-software.html
+- https://blog.lukeacha.com/2025/08/pdf-editor-analysis.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+- attack.t1059.007
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_parent:
+    ParentImage|endswith:
+    - \OpenMyManual.exe
+    - \PDF Editor.exe
+    - \PDFEditor.exe
+  selection_child:
+    Image|endswith: \node.exe
+  condition: selection_parent and selection_child
+falsepositives:
+- Unlikely
+level: medium

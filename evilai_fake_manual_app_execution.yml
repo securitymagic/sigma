@@ -1,0 +1,29 @@
+title: EvilAI Fake Manual Application Execution
+id: 4051f41c-8e57-4987-90e3-8f82b862a457
+status: experimental
+description: Detects execution of fake manual-reader application names observed in
+  the EvilAI campaign.
+references:
+- https://blog.lukeacha.com/2025/08/fake-manual-software.html
+- https://blog.lukeacha.com/2025/08/pdf-editor-analysis.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+- attack.t1204.002
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith:
+    - \OpenMyManual.exe
+    - \anyproductmanual.exe
+    - \manualreaderpro.exe
+    - \manualshq.exe
+    - \AllManualsReader_oc.exe
+    - \completeusermanuales.exe
+  condition: selection
+falsepositives:
+- A legitimate application using one of these exact filenames
+level: medium
