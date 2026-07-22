@@ -1,0 +1,32 @@
+title: UpStage Hero Process Adds Windows Firewall Rule
+id: 81369d2f-6748-4b3b-b258-a7f6d53336f9
+status: experimental
+description: Detects hero.exe invoking netsh.exe to add a Windows Firewall rule, as observed in the UpStage malware campaign.
+author: Luke Acha
+date: 2026-07-22
+
+logsource:
+  category: process_creation
+  product: windows
+
+detection:
+  selection_parent:
+    ParentImage|endswith: '\hero.exe'
+  selection_image:
+    Image|endswith: '\netsh.exe'
+  selection_command:
+    CommandLine|contains|all:
+      - 'advfirewall'
+      - 'firewall'
+      - 'add'
+      - 'rule'
+      - 'hero'
+  condition: all of selection_*
+
+falsepositives:
+  - Unlikely
+level: high
+
+tags:
+  - attack.defense-evasion
+  - attack.t1562.004
