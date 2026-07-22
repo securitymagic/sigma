@@ -1,0 +1,30 @@
+title: TamperedChef PDF Editor Scheduled Task Management
+id: 3a024877-bd97-413f-b44a-438614b2ce97
+status: experimental
+description: Detects creation or deletion of the campaign-specific PDFEditor scheduled-task
+  names.
+references:
+- https://blog.lukeacha.com/2025/06/suspicious-recipe-app.html
+- https://blog.lukeacha.com/2025/08/pdf-editor-analysis.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.persistence
+- attack.t1053.005
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith:
+    - \schtasks.exe
+    - \powershell.exe
+    - \cmd.exe
+  selection_names:
+    CommandLine|contains:
+    - PDFEditorScheduledTask
+    - PDFEditorUScheduledTask
+  condition: selection_image and selection_names
+falsepositives:
+- Unlikely
+level: high

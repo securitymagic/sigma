@@ -1,0 +1,31 @@
+title: TamperedChef PDF Editor Malicious Update Command Mode
+id: 7a081f4f-2a11-4138-bee8-535a68622ef2
+status: experimental
+description: Detects PDF Editor execution with command modes used by the TamperedChef
+  update mechanism.
+references:
+- https://blog.lukeacha.com/2025/06/suspicious-recipe-app.html
+- https://blog.lukeacha.com/2025/08/pdf-editor-analysis.html
+author: Luke Acha
+date: '2026-07-22'
+tags:
+- attack.execution
+- attack.persistence
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection_image:
+    Image|endswith:
+    - \PDF Editor.exe
+    - \PDFEditor.exe
+  selection_cli:
+    CommandLine|contains:
+    - --cm=--fullupdate
+    - --cm=--enableupdate
+    - --cm=--partialupdate
+    - --cm=--backupupdate
+  condition: selection_image and selection_cli
+falsepositives:
+- Unlikely
+level: high
